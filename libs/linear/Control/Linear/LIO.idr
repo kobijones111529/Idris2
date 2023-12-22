@@ -1,5 +1,7 @@
 module Control.Linear.LIO
 
+import Control.Monad.Trans
+
 ||| Like `Monad`, but the action and continuation must be run exactly once
 ||| to ensure that the computation is linear.
 public export
@@ -143,3 +145,11 @@ export
 public export
 LinearIO : (Type -> Type) -> Type
 LinearIO io = (LinearBind io, HasLinearIO io)
+
+export
+MonadTrans (\io => L io) where
+  lift f = Action f
+
+export
+test : Nat
+test = 4
